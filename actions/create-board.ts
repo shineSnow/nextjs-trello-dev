@@ -1,12 +1,13 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
+import { z } from "zod";
+
+const CreateBoard = z.object({ title: z.string() });
 
 export async function create(formData: FormData) {
-  "use server";
-
-  const title = formData.get("title") as string;
-  console.log("create");
+  const { title } = CreateBoard.parse({ title: formData.get("title") });
   console.log(title);
 
   await db.board.create({
@@ -14,4 +15,6 @@ export async function create(formData: FormData) {
       title,
     },
   });
+
+  revalidatePath("organization/org_2kXfTjR4B1TFKs3BFrbd0EbTMpE");
 }
