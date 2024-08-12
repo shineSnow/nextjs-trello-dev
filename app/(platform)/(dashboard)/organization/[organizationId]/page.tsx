@@ -1,9 +1,17 @@
-import { OrganizationSwitcher } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
-
 const OrganizationIdPage = () => {
-  const { userId, orgId } = auth();
-  return <div>OrganizationId:{orgId}</div>;
+  return (
+    <div>
+      <form action={""}>
+        <input
+          id="title"
+          name="title"
+          required
+          placeholder="Enter a board title"
+          className="border-black border p-1"
+        />
+      </form>
+    </div>
+  );
 };
 
 export default OrganizationIdPage;
