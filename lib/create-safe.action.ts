@@ -1,12 +1,3 @@
-/*
- * @Author: user
- * @Date: 2024-08-13 14:19:03
- * @LastEditTime: 2024-08-13 14:34:04
- * @LastEditors: user
- * @Description:
- * @FilePath: /nextjs-trello-dev/lib/create-safe.action.ts
- * 你也总是天亮了才睡!
- */
 import { z } from "zod";
 
 export type FieldErrors<T> = {
