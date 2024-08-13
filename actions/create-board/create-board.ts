@@ -6,10 +6,8 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 export type State = {
-  errors?: {
-    title?: string[];
-  };
-  message?: string | null;
+  message: string | null;
+  errors?: { title?: string[] };
 };
 
 const CreateBoard = z.object({
@@ -18,7 +16,10 @@ const CreateBoard = z.object({
   }),
 });
 
-export async function create(prevState: State, formData: FormData) {
+export async function create(
+  prevState: State,
+  formData: FormData
+): Promise<State> {
   const validateFields = CreateBoard.safeParse({
     title: formData.get("title"),
   });
