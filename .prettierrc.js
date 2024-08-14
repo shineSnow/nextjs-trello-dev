@@ -1,6 +1,6 @@
 module.exports = {
 	// 一行最多多少个字符
-	printWidth: 120,
+	printWidth: 80,
 	// 指定每个缩进级别的空格数
 	tabWidth: 2,
 	// 使用制表符而不是空格缩进行
@@ -38,4 +38,6 @@ module.exports = {
 	vueIndentScriptAndStyle: false,
 	// 换行符使用 lf 结尾是 可选值"<auto|lf|crlf|cr>"
 	endOfLine: 'lf',
+	// 多个 attribute 的元素应该分多行撰写，每个 attribute 一行。
+	singleAttributePerLine: true,
 };
