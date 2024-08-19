@@ -2,15 +2,19 @@
 
 import {
 	Popover,
+	PopoverClose,
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover';
 import { useAction } from '@/hooks/use-action';
-import { CreateBoard } from '@/actions/create-board/schema';
 
 import { FormInput } from './form-input';
 import { FormSubmit } from './form-submit';
-import Form from '../../../app/(platform)/(dashboard)/organization/[organizationId]/form';
+import { Button } from '../button';
+import { X } from 'lucide-react';
+import { createBoard } from '@/actions/create-board';
+import { toast } from 'sonner';
+import { FormPicker } from './form-picker';
 
 interface FormPopoverProps {
 	children: React.ReactNode;
@@ -24,6 +28,21 @@ export const FormPopover = ({
 	align,
 	sideOffset = 0,
 }: FormPopoverProps) => {
+	const { excute, fieldErrors } = useAction(createBoard, {
+		onSuccess: (data) => {
+			console.log(data);
+			toast.success('Board created successfully');
+		},
+		onError: (error) => {
+			console.log({ error });
+			toast.error(error);
+		},
+	});
+
+	const submit = (formdata: FormData) => {
+		const title = formdata.get('title') as string;
+		excute({ title });
+	};
 	return (
 		<Popover>
 			<PopoverTrigger asChild>{children}</PopoverTrigger>
@@ -36,6 +55,32 @@ export const FormPopover = ({
 				<div className="text-sm font-medium text-center text-neutral-600 pb-4">
 					Create board
 				</div>
+				<PopoverClose>
+					<Button
+						className="w-auto h-auto p-4 absolute top-2 right-2 text-neutral-600"
+						variant="ghost"
+					>
+						<X className="h-4 w-4" />
+					</Button>
+				</PopoverClose>
+				<form
+					className="space-y-4"
+					action={submit}
+				>
+					<div className="space-y-4">
+						<FormPicker
+							id="image"
+							errors={fieldErrors}
+						/>
+						<FormInput
+							id="title"
+							label="Board title"
+							type="text"
+							errors={fieldErrors}
+						/>
+					</div>
+					<FormSubmit className="w-full">Create</FormSubmit>
+				</form>
 			</PopoverContent>
 		</Popover>
 	);

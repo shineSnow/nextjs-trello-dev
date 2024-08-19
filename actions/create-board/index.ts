@@ -8,10 +8,14 @@ import { createSafeAction } from '@/lib/create-safe-action';
 import { CreateBoard } from './schema';
 
 const handler = async (data: InputType): Promise<ReturnType> => {
-	const { userId } = auth();
-	if (!userId) {
+	const { userId, orgId } = auth();
+
+	if (!userId || !orgId) {
 		return { error: 'Unauthorized' };
 	}
+
+	const canCreate = await hasAvaliableCount();
+	const isPro = await checkSubscription();
 
 	const { title } = data;
 	let board;

@@ -1,12 +1,12 @@
-import OrgControl from "./_components/org-control";
+import OrgControl from './_components/org-control';
 
 const OrganizationIdLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div>
-      <OrgControl />
-      {children}
-    </div>
-  );
+	return (
+		<div className="w-full">
+			<OrgControl />
+			{children}
+		</div>
+	);
 };
 
 export default OrganizationIdLayout;
