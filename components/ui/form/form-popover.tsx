@@ -15,6 +15,9 @@ import { X } from 'lucide-react';
 import { createBoard } from '@/actions/create-board';
 import { toast } from 'sonner';
 import { FormPicker } from './form-picker';
+import { useProModal } from '@/hooks/use-pro-model';
+import { useRouter } from 'next/navigation';
+import { ElementRef, useRef } from 'react';
 
 interface FormPopoverProps {
 	children: React.ReactNode;
@@ -28,20 +31,27 @@ export const FormPopover = ({
 	align,
 	sideOffset = 0,
 }: FormPopoverProps) => {
+	const proModal = useProModal();
+	const router = useRouter();
+	const closeRef = useRef<ElementRef<'button'>>(null);
 	const { excute, fieldErrors } = useAction(createBoard, {
 		onSuccess: (data) => {
 			console.log(data);
 			toast.success('Board created successfully');
+			closeRef.current?.click();
+			router.push(`/board/${data.id}`);
 		},
 		onError: (error) => {
 			console.log({ error });
 			toast.error(error);
+			proModal.onOpen();
 		},
 	});
 
 	const submit = (formdata: FormData) => {
 		const title = formdata.get('title') as string;
-		excute({ title });
+		const image = formdata.get('image') as string;
+		excute({ title, image });
 	};
 	return (
 		<Popover>

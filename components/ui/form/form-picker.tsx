@@ -2,12 +2,13 @@
 
 import { unsplash } from '@/lib/unsplash';
 import { cn } from '@/lib/utils';
-import { Loader2 } from 'lucide-react';
+import { Check, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { set } from 'zod';
-
+import { defaultImages } from '@/constants/images';
+import Link from 'next/link';
+import { FormErrors } from './form-errors';
 interface FormPickerProps {
 	id: string;
 	errors?: Record<string, string[] | undefined>;
@@ -35,7 +36,7 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
 				}
 			} catch (error) {
 				console.log(error);
-				setImages([]);
+				setImages(defaultImages);
 			} finally {
 				setIsLoading(false);
 			}
@@ -64,15 +65,40 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
 							setSelectedImageId(image.id);
 						}}
 					>
+						<input
+							type="radio"
+							name={id}
+							className="hidden"
+							id={id}
+							checked={selectedImageId === image.id}
+							disabled={pending}
+							value={`${image.id} | ${image.urls.thumb} | ${image.urls.full} | ${image.links.html} | ${image.user.name}`}
+						/>
 						<Image
 							alt="unsplash images"
 							src={image.urls.thumb}
 							fill
 							className="object-cover rounded-sm"
 						/>
+						{selectedImageId === image.id && (
+							<div className="absolute inset-y-0 h-full w-full bg-black/30 flex items-center justify-center">
+								<Check className="h-4 w-4 text-white" />
+							</div>
+						)}
+						<Link
+							href={image.links.html}
+							target="_blank"
+							className="opacity-0 group-hover:opacity-100 absolute bottom-0 w-full text-[10px] truncate text-white hover:underline p-1 bg-black/50"
+						>
+							{image.user.name}
+						</Link>
 					</div>
 				))}
 			</div>
+			<FormErrors
+				id="image"
+				errors={errors}
+			/>
 		</div>
 	);
 };
