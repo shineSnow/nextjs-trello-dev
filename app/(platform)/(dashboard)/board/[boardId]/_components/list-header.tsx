@@ -7,7 +7,7 @@ import { useEventListener } from 'usehooks-ts';
 
 interface ListHeaderProps {
 	data: List;
-	onAddCard: () => {};
+	onAddCard: () => void;
 }
 
 export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {

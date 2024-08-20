@@ -1,6 +1,7 @@
 import { ListWithCards } from '@/types';
 import { Draggable } from '@hello-pangea/dnd';
 import { ElementRef, useRef, useState } from 'react';
+import { ListHeader } from './list-header';
 
 interface ListItemProps {
 	data: ListWithCards;
@@ -38,7 +39,10 @@ export const ListItem = ({ data, index }: ListItemProps) => {
 						{...provided.dragHandleProps}
 						className="w-full rounded-md bg-[#f1f2f4] shadow-md pb-2"
 					>
-						<ListHeader />
+						<ListHeader
+							data={data}
+							onAddCard={enableEditing}
+						/>
 					</div>
 				</li>
 			)}
