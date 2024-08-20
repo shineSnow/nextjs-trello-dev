@@ -1,4 +1,4 @@
-'user server';
+'use server';
 
 import { auth } from '@clerk/nextjs/server';
 import { InputType, ReturnType } from './types';
@@ -43,4 +43,4 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 	};
 };
 
-export const updateListOrder = createSafeAction(UpdateCardOrder, handler);
+export const updateCardOrder = createSafeAction(UpdateCardOrder, handler);
