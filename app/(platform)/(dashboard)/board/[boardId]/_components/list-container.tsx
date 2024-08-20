@@ -35,7 +35,7 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 
 export const ListContainer = ({ data, boardId }: ListContainerProps) => {
 	const [orderedData, setOrderedData] = useState(data);
-	const { excute: excuteUpdateListOrder, fieldErrors } = useAction(
+	const { excute: executeUpdateListOrder, fieldErrors } = useAction(
 		updateListOrder,
 		{
 			onSuccess: (data) => {
@@ -63,6 +63,26 @@ export const ListContainer = ({ data, boardId }: ListContainerProps) => {
 	const onDragEnd = (result: any) => {
 		const { destination, source, type } = result;
 		if (!destination) return;
+
+		if (
+			destination.droppableId === source.droppableId &&
+			destination.index === source.index
+		) {
+			return;
+		}
+
+		if (type === 'list') {
+			const items = reorder(orderedData, source.index, destination.index).map(
+				(item, index) => ({ ...item, order: index })
+			);
+			setOrderedData(items);
+			executeUpdateListOrder({ items, boardId });
+		}
+
+		// User moves a card
+
+		if (type === 'card') {
+		}
 	};
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>

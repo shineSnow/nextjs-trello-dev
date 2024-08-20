@@ -7,7 +7,7 @@ interface BoardNavbarProps {
 export const BoardNavbar = ({ data }: BoardNavbarProps) => {
 	return (
 		<div>
-			<div></div>
+			<div>1111111</div>
 		</div>
 	);
 };
