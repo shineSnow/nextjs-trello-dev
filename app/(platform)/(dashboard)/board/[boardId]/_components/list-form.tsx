@@ -1,4 +1,4 @@
-import { createList } from '@/actions/update-list-order/create-list';
+import { createList } from '@/actions/create-list';
 import { useAction } from '@/hooks/use-action';
 import { useParams, useRouter } from 'next/navigation';
 import { ElementRef, useRef, useState } from 'react';

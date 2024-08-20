@@ -1,4 +1,4 @@
-import { updateList } from '@/actions/update-list-order/update-list';
+import { updateList } from '@/actions/update-list';
 import { useAction } from '@/hooks/use-action';
 import { List } from '@prisma/client';
 import { ElementRef, useRef, useState } from 'react';

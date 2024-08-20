@@ -1,10 +1,7 @@
+'use server';
+
 import { auth } from '@clerk/nextjs/server';
 import { InputType, ReturnType } from './types';
-import { title } from 'process';
-import { List } from '@prisma/client';
-import { db } from '@/lib/db';
-import { revalidatePath } from 'next/cache';
-import { createSafeAction } from '@/lib/create-safe-action';
 import { UpdateList } from './schema';
 
 const handler = async (data: InputType): Promise<ReturnType> => {
