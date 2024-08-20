@@ -32,7 +32,7 @@ const BoardIdPage = async ({ params }: BoardIdProps) => {
 			order: 'asc',
 		},
 	});
-
+	console.log('lists', lists);
 	return (
 		<div className="p-4 h-full overflow-x-auto">
 			<ListContainer

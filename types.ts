@@ -1,7 +1,7 @@
 import { Card, List } from '@prisma/client';
 
 export type ListWithCards = List & {
-	Cards: Card[];
+	cards: Card[];
 };
 
 export type CardWithList = Card & {
