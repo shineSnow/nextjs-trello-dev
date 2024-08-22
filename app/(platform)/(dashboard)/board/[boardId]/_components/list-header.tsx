@@ -1,4 +1,5 @@
 import { updateList } from '@/actions/update-list';
+import { FormInput } from '@/components/ui/form/form-input';
 import { useAction } from '@/hooks/use-action';
 import { List } from '@prisma/client';
 import { ElementRef, useRef, useState } from 'react';
@@ -40,12 +41,62 @@ export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {
 		},
 	});
 
-	const handleSubmit = (formData: FormData) => {};
+	const handleSubmit = (formData: FormData) => {
+		const title = formData.get('title') as string;
+		const id = formData.get('id') as string;
+		const boardId = formData.get('boardId') as string;
 
-	const onBlur = () => {};
+		if (title === data.title) {
+			disableEditing();
+			return;
+		}
+		excute({ title, id, boardId });
+	};
 
-	const onKeyDown = () => {};
+	const onBlur = () => {
+		formRef.current?.submit();
+	};
+
+	const onKeyDown = (e: KeyboardEvent) => {
+		if (e.key === 'Escape') {
+			formRef.current?.requestSubmit();
+		}
+	};
 	useEventListener('keydown', onKeyDown);
 
-	return <div className="">list header</div>;
+	return (
+		<div className="pt-2 px-2 text-sm font-semibold flex justify-between items-start gap-x-2">
+			{isEditing ? (
+				<form
+					action={handleSubmit}
+					ref={formRef}
+					className="flex-1 px-[2px]"
+				>
+					<input
+						hidden
+						name="id"
+						id="id"
+						value={data.id}
+					/>
+					<input
+						hidden
+						name="boardId"
+						id="boardId"
+						value={data.boardId}
+					/>
+					<FormInput
+						ref={inputRef}
+						onBlur={onBlur}
+						id="title"
+						placeholder="Enter list title"
+						defaultValue={title}
+						className="text-sm px-[7px] py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition truncate bg-transparent focus:bg-white"
+					/>
+					<button type='submit' hidden/>
+				</form>
+			) : (
+				<div onClick={enableEditing} className="w-full">{data.title}</div>
+			)}
+		</div>
+	);
 };

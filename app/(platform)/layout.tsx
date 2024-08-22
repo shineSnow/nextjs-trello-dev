@@ -3,7 +3,7 @@ import { Toaster } from 'sonner';
 
 const PlatFormLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<ClerkProvider afterSignOutUrl="/">
+		<ClerkProvider>
 			<Toaster />
 			{children}
 		</ClerkProvider>
