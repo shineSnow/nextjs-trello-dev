@@ -5,6 +5,7 @@ import { List } from '@prisma/client';
 import { ElementRef, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { useEventListener } from 'usehooks-ts';
+import { ListOptions } from './list-options';
 
 interface ListHeaderProps {
 	data: List;
@@ -92,11 +93,23 @@ export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {
 						defaultValue={title}
 						className="text-sm px-[7px] py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition truncate bg-transparent focus:bg-white"
 					/>
-					<button type='submit' hidden/>
+					<button
+						type="submit"
+						hidden
+					/>
 				</form>
 			) : (
-				<div onClick={enableEditing} className="w-full">{data.title}</div>
+				<div
+					onClick={enableEditing}
+					className="w-full"
+				>
+					{data.title}
+				</div>
 			)}
+			<ListOptions
+				data={data}
+				onAddCard={onAddCard}
+			/>
 		</div>
 	);
 };

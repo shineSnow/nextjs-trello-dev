@@ -1,3 +1,11 @@
+import { SignedOut } from "@clerk/nextjs";
+
 export default function TextPage() {
-	return <div>111111111111111</div>;
+	return (
+		<div>
+			<SignedOut>
+				sign out
+			</SignedOut>
+		</div>
+	);
 }
