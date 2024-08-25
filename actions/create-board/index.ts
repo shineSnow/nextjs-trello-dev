@@ -9,6 +9,7 @@ import { CreateBoard } from './schema';
 import { hasAvailableCount, incrementAvaliableCount } from '@/lib/org-limit';
 import { checkSubscriptions } from '@/lib/subscription';
 import { ACTION, Board, ENTITY_TYPE } from '@prisma/client';
+import { createAuditLog } from '@/lib/create-audit-log';
 
 const handler = async (data: InputType): Promise<ReturnType> => {
 	const { userId, orgId } = auth();
@@ -57,12 +58,12 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		if (!isPro) {
 			await incrementAvaliableCount();
 		}
-		// await createAuditLog({
-		// 	entityTitle:board.title,
-		// 	entityId:board.id,
-		// 	entityType:ENTITY_TYPE.BOARD,
-		// 	action:ACTION.CREATE
-		// })
+		await createAuditLog({
+			entityTitle:board.title,
+			entityId:board.id,
+			entityType:ENTITY_TYPE.BOARD,
+			action:ACTION.CREATE
+		})
 	} catch (error) {
 		return { error: 'Failed to create board' };
 	}
